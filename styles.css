@@ -1,0 +1,60 @@
+body {
+    background-color: #f8f9fa; /* Light background color */
+    color: #343a40; /* Main text color */
+    font-family: 'Arial', sans-serif;
+}
+
+.container {
+    background-color: #ffffff; /* Container background color */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 20px;
+}
+
+h1 {
+    color: #007bff; /* Blue color for the main title */
+}
+
+.nav-tabs .nav-link {
+    color: #007bff; /* Blue color for tabs */
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #007bff; /* Blue color for active tab */
+    color: #ffffff; /* White text for active tab */
+}
+
+.table {
+    border-collapse: collapse; /* Remove spacing between borders */
+}
+
+.table th {
+    background-color: #343a40; /* Dark gray for table header */
+    color: #ffffff; /* White text for table header */
+}
+
+.table td {
+    border: 1px solid #dee2e6; /* Table border */
+}
+
+.table tbody tr:hover {
+    background-color: #e9ecef; /* Light gray background on hover */
+}
+
+.btn-primary {
+    background-color: #28a745; /* Green color for buttons */
+    border-color: #28a745; /* Green border for buttons */
+}
+
+.btn-primary:hover {
+    background-color: #218838; /* Dark green on hover */
+    border-color: #1e7e34; /* Dark green border on hover */
+}
+
+#khsChart {
+    max-width: 600px;
+    margin: auto;
+    border: 1px solid #007bff; /* Blue border for chart */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #ffffff; /* White background for chart */
+}

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Mahasiswa</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        #khsChart {
+            max-width: 600px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Data Mahasiswa</h1>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="data-mahasiswa-tab" data-toggle="tab" href="#data-mahasiswa" role="tab" aria-controls="data-mahasiswa" aria-selected="true">Data Mahasiswa</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="data-khs-tab" data-toggle="tab" href="#data-khs" role="tab" aria-controls="data-khs" aria-selected="false">KHS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="data-mata-kuliah-tab" data-toggle="tab" href="#data-mata-kuliah" role="tab" aria-controls="data-mata-kuliah" aria-selected="false">Data Mata Kuliah</a>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="myTabContent">
+            <!-- Tab Data Mahasiswa -->
+            <div class="tab-pane fade show active" id="data-mahasiswa" role="tabpanel" aria-labelledby="data-mahasiswa-tab">
+                <h2 class="mt-4">Daftar Mahasiswa</h2>
+                <form method="POST" class="mb-3">
+                    <div class="form-group">
+                        <label for="searchNIM">Cari Mahasiswa (NIM):</label>
+                        <input type="text" class="form-control" id="searchNIM" name="searchNIM" placeholder="Masukkan NIM" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Cari</button>
+                </form>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>NIM</th>
+                            <th>Nama</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for mahasiswa in mahasiswa_list %}
+                        <tr>
+                            <td>{{ mahasiswa[1] }}</td>
+                            <td>{{ mahasiswa[2] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Tab KHS -->
+            <div class="tab-pane fade" id="data-khs" role="tabpanel" aria-labelledby="data-khs-tab">
+                <h2 class="mt-4">KHS</h2>
+                <form method="POST">
+                    <div class="form-group">
+                        <label for="nimKHS">NIM:</label>
+                        <input type="text" class="form-control" id="nimKHS" name="nimKHS" placeholder="Masukkan NIM" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="semesterKHS">Pilih Semester:</label>
+                        <select name="semesterKHS" id="semesterKHS" class="form-control">
+                            <option value="Ganjil">Ganjil</option>
+                            <option value="Genap">Genap</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tahunKHS">Pilih Tahun:</label>
+                        <select name="tahunKHS" id="tahunKHS" class="form-control">
+                            <option value="2021/2022">2021/2022</option>
+                            <option value="2022/2023">2022/2023</option> 
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2">Lihat Data KHS</button>
+                </form>
+                <div class="mt-3">
+                    <h4>Detail KHS</h4>
+                    <p>Nama Mahasiswa: <span id="namaMahasiswa">{{ mahasiswa_data['nama'] if mahasiswa_data else '' }}</span></p>
+                    <p>IPK: <span id="ipk">{{ ipk if ipk else 'Tidak tersedia' }}</span></p>
+                    <p>IPS: <span id="ips">{{ ips if ips else 'Tidak tersedia' }}</span></p>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Kode Mata Kuliah</th>
+                                <th>Nama Mata Kuliah</th>
+                                <th>Nilai Mata Kuliah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in results %}
+                            <tr>
+                                <td>{{ row[3] }}</td>
+                                <td>{{ row[4] }}</td>
+                                <td>{{ row[6] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tab Data Mata Kuliah -->
+            <div class="tab-pane fade" id="data-mata-kuliah" role="tabpanel" aria-labelledby="data-mata-kuliah-tab">
+                <h2 class="mt-4">Data Mata Kuliah</h2>
+                <form method="POST" class="mb-3">
+                    <div class="form-group">
+                        <label for="searchMK">Cari Mata Kuliah:</label>
+                        <input type="text" class="form-control" id="searchMK" name="searchMK" placeholder="Masukkan Kode atau Nama Mata Kuliah" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Cari</button>
+                </form>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Kode Mata Kuliah</th>
+                            <th>Nama Mata Kuliah</th>
+                            <th>SKS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for mata_kuliah in mata_kuliah_data %}
+                        <tr>
+                            <td>{{ mata_kuliah[1] }}</td>
+                            <td>{{ mata_kuliah[2] }}</td>
+                            <td>{{ mata_kuliah[3] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Muat tab yang disimpan dari localStorage
+            var activeTab = localStorage.getItem('activeTab');
+            if (activeTab) {
+                $('.nav-tabs a[href="' + activeTab + '"]').tab('show');
+            }
+
+            // Simpan tab yang aktif saat tab diubah
+            $('.nav-tabs a').on('shown.bs.tab', function() {
+                localStorage.setItem('activeTab', $(this).attr('href'));
+            });
+        });
+    </script>
+</body>
+</html>
